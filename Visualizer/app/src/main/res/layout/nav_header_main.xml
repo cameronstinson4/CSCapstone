@@ -15,11 +15,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="78dp"
+        android:layout_height="83dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/earthquake"
-        android:layout_weight="1.37" />
+        app:srcCompat="@drawable/earthquake" />
 
     <TextView
         android:layout_width="match_parent"
@@ -27,6 +26,5 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Survivor Visualizer"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
 
 </LinearLayout>

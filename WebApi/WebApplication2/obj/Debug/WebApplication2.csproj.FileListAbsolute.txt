@@ -1,0 +1,154 @@
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\csc.exe
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\Microsoft.CodeAnalysis.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\Microsoft.CSharp.Core.targets
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\Microsoft.VisualBasic.Core.targets
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\System.Collections.Immutable.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\System.Reflection.Metadata.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\vbc.exe
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\VBCSCompiler.exe
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\roslyn\VBCSCompiler.exe.config
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\WebApplication2.dll.config
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\WebApplication2.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\WebApplication2.pdb
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Antlr3.Runtime.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\EntityFramework.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\EntityFramework.SqlServer.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.AspNet.Identity.Core.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.AspNet.Identity.Owin.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Host.SystemWeb.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.Cookies.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.Facebook.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.Google.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.OAuth.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.Twitter.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Web.Infrastructure.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Newtonsoft.Json.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Owin.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Net.Http.Formatting.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Helpers.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Http.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Http.Owin.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Http.WebHost.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Mvc.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Optimization.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Razor.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.WebPages.Deployment.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.WebPages.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.WebPages.Razor.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\WebGrease.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Newtonsoft.Json.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Net.Http.Formatting.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Helpers.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Http.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Http.WebHost.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Mvc.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Optimization.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Razor.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.WebPages.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.WebPages.Deployment.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.WebPages.Razor.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Antlr3.Runtime.pdb
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\EntityFramework.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\EntityFramework.SqlServer.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.AspNet.Identity.Core.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.AspNet.Identity.Owin.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Host.SystemWeb.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.Facebook.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.Cookies.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.OAuth.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.Google.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.Twitter.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\bin\System.Web.Http.Owin.xml
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\obj\Debug\WebApplication2.csprojResolveAssemblyReference.cache
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\obj\Debug\WebApplication2.dll
+c:\users\burni\documents\visual studio 2015\Projects\WebApplication2\WebApplication2\obj\Debug\WebApplication2.pdb
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\csc.exe
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\System.Collections.Immutable.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\System.Reflection.Metadata.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\vbc.exe
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\VBCSCompiler.exe
+C:\git\CSCapstone\WebApi\WebApplication2\bin\roslyn\VBCSCompiler.exe.config
+C:\git\CSCapstone\WebApi\WebApplication2\bin\WebApplication2.dll.config
+C:\git\CSCapstone\WebApi\WebApplication2\bin\WebApplication2.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\WebApplication2.pdb
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Antlr3.Runtime.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\EntityFramework.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\EntityFramework.SqlServer.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.AspNet.Identity.Core.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.Cookies.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.Facebook.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.Google.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.OAuth.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.Twitter.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Web.Infrastructure.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Newtonsoft.Json.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Owin.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Net.Http.Formatting.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Helpers.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Http.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Http.Owin.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Http.WebHost.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Mvc.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Optimization.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Razor.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.WebPages.Deployment.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.WebPages.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.WebPages.Razor.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\WebGrease.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Newtonsoft.Json.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Net.Http.Formatting.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Helpers.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Http.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Http.WebHost.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Mvc.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Optimization.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Razor.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.WebPages.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.WebPages.Deployment.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.WebPages.Razor.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Antlr3.Runtime.pdb
+C:\git\CSCapstone\WebApi\WebApplication2\bin\EntityFramework.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\EntityFramework.SqlServer.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.AspNet.Identity.Core.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.Facebook.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.Cookies.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.OAuth.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.Google.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.Twitter.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Http.Owin.xml
+C:\git\CSCapstone\WebApi\WebApplication2\obj\Debug\WebApplication2.csprojResolveAssemblyReference.cache
+C:\git\CSCapstone\WebApi\WebApplication2\obj\Debug\WebApplication2.dll
+C:\git\CSCapstone\WebApi\WebApplication2\obj\Debug\WebApplication2.pdb
