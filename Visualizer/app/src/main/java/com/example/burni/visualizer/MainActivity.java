@@ -3,8 +3,6 @@ package com.example.burni.visualizer;
 import android.annotation.TargetApi;
 import android.app.FragmentManager;
 import android.content.res.ColorStateList;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,18 +25,31 @@ import com.example.burni.visualizer.fragments.SetupFragment;
 import com.example.burni.visualizer.fragments.ThirdViewFragment;
 import com.example.burni.visualizer.fragments.MainFragment;
 import com.example.burni.visualizer.tasks.AlertServerTask;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Broadcaster {
 
     public boolean _broadcast;
     private MainActivity _uhhthis;
+    private AlertServerTask _alertingServer;
+    private List<LatLng> _locations;
+    private LatLngBounds _boundary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _uhhthis = this;
         _broadcast = false;
+
+        _locations = new ArrayList<>();
+        DataSeeder.seedLocationData(_locations);
+
+        _boundary = SetupManager.getBoundaries();
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -57,11 +68,13 @@ public class MainActivity extends AppCompatActivity
                     view.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{getResources().getColor(R.color.colorPersonFound)}));
 
                     Toast.makeText(getApplicationContext(), "Broadcasting your position.", Toast.LENGTH_LONG).show();
-                    alertServerTask.start();
+                    _alertingServer = new AlertServerTask(_uhhthis, _uhhthis);
+                    _alertingServer.execute("", "", "");
                 }
                 else if (_broadcast) {
                     _broadcast = false;
                     view.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{getResources().getColor(R.color.colorAccent)}));
+                    _alertingServer.cancel(true);
                 }
             }
         });
@@ -144,6 +157,18 @@ public class MainActivity extends AppCompatActivity
     }
     @Override
     public boolean isBroadcasting() {
+
         return _broadcast;
+    }
+    public List<LatLng> getLocations() {
+
+        return _locations;
+    }
+    public void checkConnectionToServer() {
+
+    }
+
+    public LatLngBounds getBoundary() {
+        return _boundary;
     }
 }

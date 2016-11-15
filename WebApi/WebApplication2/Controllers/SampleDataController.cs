@@ -14,16 +14,8 @@ namespace WebApplication2.Controllers
         public SampleData sampleData = new SampleData()
         {
             Coordinates = new Coordinate[] {
-                new Coordinate
-                {
-                    Latitude = 1,
-                    Longitude = -12
-                },
-                new Coordinate
-                {
-                    Latitude = 40,
-                    Longitude = 40
-                }
+                new Coordinate(),
+                new Coordinate()
             }
         };
 

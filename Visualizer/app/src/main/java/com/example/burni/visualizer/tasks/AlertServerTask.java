@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -22,7 +23,7 @@ import static android.content.Context.LOCATION_SERVICE;
  * Created by burni on 10/17/2016.
  */
 
-public class AlertServerTask extends Thread {
+public class AlertServerTask extends AsyncTask<String, Void, String> {
 
     private Activity _parentActivity;
     private LocationManager _locationManager;
@@ -61,11 +62,11 @@ public class AlertServerTask extends Thread {
     }
 
     @Override
-    public void run() {
+    protected String doInBackground(String... params) {
 
         if (ActivityCompat.checkSelfPermission(_parentActivity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(_parentActivity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+            return "FAILURE";
         }
 
 
@@ -98,5 +99,14 @@ public class AlertServerTask extends Thread {
                 break;
             }
         }
+        return null;
+    }
+
+    protected void onProgressUpdate(String... progress) {
+
+    }
+
+    protected void onPostExecute(String... result) {
+
     }
 }

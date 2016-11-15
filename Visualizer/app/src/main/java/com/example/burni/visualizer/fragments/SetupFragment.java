@@ -2,6 +2,7 @@ package com.example.burni.visualizer.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.burni.visualizer.R;
+import com.example.burni.visualizer.SetupActivity;
 
 public class SetupFragment extends android.app.Fragment {
 
@@ -20,7 +22,8 @@ public class SetupFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         context = container.getContext();
-
+        Intent i = new Intent(context, SetupActivity.class);
+        startActivity(i);
         return inflater.inflate(R.layout.fragment_setup, container,false);
     }
 
