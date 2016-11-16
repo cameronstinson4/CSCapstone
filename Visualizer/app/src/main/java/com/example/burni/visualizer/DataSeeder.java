@@ -27,8 +27,8 @@ public class DataSeeder {
     public static LatLngBounds seedBoundaryData() {
 
         return new LatLngBounds(
-                  new LatLng(37, -76.5)
-                , new LatLng(37.05, -76.4)
+                  new LatLng(37.05, -76.5)
+                , new LatLng(37.08, -76.47)
         );
     }
 }

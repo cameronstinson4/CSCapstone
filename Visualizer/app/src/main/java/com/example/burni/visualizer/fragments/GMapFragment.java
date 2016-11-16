@@ -41,11 +41,8 @@ public class GMapFragment extends android.app.Fragment implements OnMapReadyCall
         _locations = ((MainActivity) getActivity()).getLocations();
         _boundary = ((MainActivity) getActivity()).getBoundary();
 
-
         _dialog = ProgressDialog.show(getActivity(), "", "Loading. Please wait...", true);
         _dialog.show();
-        new RetrieveJsonArrayTask(getActivity(), this).execute("http://localhost:56680/api/sampledata");
-
 
         return inflater.inflate(R.layout.fragment_gmap, container, false);
     }
@@ -70,31 +67,6 @@ public class GMapFragment extends android.app.Fragment implements OnMapReadyCall
         }
 
         _goolgeMap.moveCamera(CameraUpdateFactory.newLatLngBounds(_boundary, 10));
-    }
-
-    private LatLng averageLocation() {
-        double lat = 0;
-        double lon = 0;
-        for (LatLng l : _locations) {
-            lat += l.latitude;
-            lon += l.longitude;
-        }
-        lat = lat / _locations.size();
-        lon = lon / _locations.size();
-
-        return new LatLng(lat, lon);
-    }
-
-    private void addAllMarkers() {
-        for (Marker m : _markers){
-            m.setVisible(true);
-        }
-    }
-
-    private void removeAllMarkers() {
-        for (Marker m : _markers) {
-            m.setVisible(false);
-        }
     }
 
     @Override
