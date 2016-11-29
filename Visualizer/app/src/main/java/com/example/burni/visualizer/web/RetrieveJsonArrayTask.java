@@ -17,15 +17,14 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 public class RetrieveJsonArrayTask extends AsyncTask<String, Void, JSONArray> {
+
     private Exception exception;
     private Context _context;
-    private Dialog dlg;
     private ResultCallback call;
 
     public RetrieveJsonArrayTask(Context context, ResultCallback call)
     {
         this._context = context;
-        dlg = new ProgressDialog(_context);
         this.call = call;
     }
 
@@ -53,9 +52,7 @@ public class RetrieveJsonArrayTask extends AsyncTask<String, Void, JSONArray> {
     @Override
     protected void onPreExecute()
     {
-        if(!dlg.isShowing()) {
-            dlg.show();
-        }
+
     }
 
     @Override
@@ -74,9 +71,7 @@ public class RetrieveJsonArrayTask extends AsyncTask<String, Void, JSONArray> {
     @Override
     protected void onPostExecute(JSONArray result) {
         super.onPostExecute(result);
-        if(dlg.isShowing()) {
-            dlg.dismiss();
-        }
+
         call.onResult(result);
     }
 }

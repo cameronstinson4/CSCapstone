@@ -35,5 +35,6 @@
     <string name="reset_configuration">Reset Configuration</string>
     <string name="about_text">Survivor Location Visualizer\nSenior Capstone Project\nCameron Stinson\nClass of 2016</string>
     <string name="signal">Signal</string>
+    <string name="tilt_help">Slide with two fingers to adjust the tilt</string>
 
 </resources>

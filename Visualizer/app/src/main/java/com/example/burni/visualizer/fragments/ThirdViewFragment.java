@@ -1,5 +1,8 @@
 package com.example.burni.visualizer.fragments;
 
+import android.widget.Toast;
+
+import com.example.burni.visualizer.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -10,6 +13,8 @@ public class ThirdViewFragment extends MapFragmentBase {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         super.onMapReady(googleMap);
+
+        Toast.makeText(getActivity().getApplicationContext(), getString(R.string.tilt_help), Toast.LENGTH_LONG).show();
 
         _goolgeMap.moveCamera(CameraUpdateFactory.newLatLngBounds(_boundary, 10));
 

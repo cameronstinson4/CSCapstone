@@ -1,6 +1,7 @@
 package com.example.burni.visualizer;
 
 import com.example.burni.visualizer.datamodels.LatLngHt;
+import com.example.burni.visualizer.datamodels.SignalCoordinate;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
@@ -40,12 +41,13 @@ public class MockServer {
         return true;
     }
 
-    public static ArrayList<LatLngHt> updateLocations() {
+    public static ArrayList<SignalCoordinate> updateLocations() {
         double rand = Math.random()/1000;
-        ArrayList<LatLngHt> shit = new ArrayList<>();
-        shit.add(new LatLngHt(pos1._lat - rand, pos1._lng -rand, pos1._ht -rand));
-        shit.add(new LatLngHt(pos2._lat - rand, pos2._lng -rand, pos2._ht -rand));
-        shit.add(new LatLngHt(pos3._lat - rand, pos3._lng -rand, pos3._ht -rand));
+        ArrayList<SignalCoordinate> shit = new ArrayList<>();
+
+        shit.add(new SignalCoordinate("1", new LatLngHt(pos1.lat - rand, pos1.lng -rand, pos1.ht -rand), 2));
+        shit.add(new SignalCoordinate("2", new LatLngHt(pos2.lat - rand, pos2.lng -rand, pos2.ht -rand), 5));
+        shit.add(new SignalCoordinate("3", new LatLngHt(pos3.lat - rand, pos3.lng -rand, pos3.ht -rand), 3));
 
         return shit;
     }

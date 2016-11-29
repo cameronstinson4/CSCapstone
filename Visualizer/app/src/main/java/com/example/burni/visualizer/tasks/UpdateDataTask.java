@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import com.example.burni.visualizer.MainActivity;
 import com.example.burni.visualizer.MockServer;
 import com.example.burni.visualizer.datamodels.LatLngHt;
+import com.example.burni.visualizer.datamodels.SignalCoordinate;
+import com.example.burni.visualizer.web.RetrieveJsonArrayTask;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,9 @@ public class UpdateDataTask extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... params) {
         while(!Thread.interrupted()) {
-            ArrayList<LatLngHt> newLocations = MockServer.updateLocations();
+
+
+            ArrayList<SignalCoordinate> newLocations = MockServer.updateLocations();
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {

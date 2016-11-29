@@ -3,6 +3,7 @@ package com.example.burni.visualizer.fragments;
 import android.Manifest;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,11 +14,14 @@ import android.view.ViewGroup;
 
 import com.example.burni.visualizer.MainActivity;
 import com.example.burni.visualizer.R;
+import com.example.burni.visualizer.datamodels.SignalCoordinate;
 import com.example.burni.visualizer.web.ResultCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -31,12 +35,13 @@ import java.util.List;
  * Created by burni on 11/29/2016.
  */
 
-public class MapFragmentBase extends Fragment implements OnMapReadyCallback, ResultCallback {
+public abstract class MapFragmentBase extends Fragment implements OnMapReadyCallback, ResultCallback {
 
     final int MARKER_UPDATE_INTERVAL = 1000;
 
     protected GoogleMap _goolgeMap;
     protected List<Marker> _markers;
+    protected List<Circle> _accuracyCircles;
     protected LatLngBounds _boundary;
     protected Handler _handler = new Handler();
 
@@ -44,6 +49,7 @@ public class MapFragmentBase extends Fragment implements OnMapReadyCallback, Res
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         _markers = new ArrayList<>();
+        _accuracyCircles = new ArrayList<>();
         _boundary = ((MainActivity) getActivity()).getBoundary();
         _handler.postDelayed(updateMarker, MARKER_UPDATE_INTERVAL);
 
@@ -90,11 +96,24 @@ public class MapFragmentBase extends Fragment implements OnMapReadyCallback, Res
     Runnable updateMarker = new Runnable() {
         @Override
         public void run() {
+
+            List<SignalCoordinate> coords = ((MainActivity) getActivity()).getLocations();
+
+            _goolgeMap.clear();
+
             for (int i = 0; i < ((MainActivity) getActivity()).getLocations().size(); i++) {
+
+                _accuracyCircles.add( _goolgeMap.addCircle(new CircleOptions()
+                        .center(coords.get(i).getLatLngHt().getLatLng())
+                        .radius(coords.get(i).getAccuracy())
+                        .fillColor(Color.BLUE)
+                        .strokeColor(Color.RED)
+                        .strokeWidth(8)));
+
                 _markers.add(_goolgeMap.addMarker(
                         new MarkerOptions().title(getString(R.string.signal) + " " + i)
-                                .position(((MainActivity) getActivity()).getLocations().get(i)._latLng)
-                                .snippet(getString(R.string.height) + ": " + ((MainActivity) getActivity()).getLocations().get(i)._ht + " m")));
+                                .position(coords.get(i).getLatLngHt().getLatLng())
+                                .snippet(getString(R.string.height) + ": " + coords.get(i).getLatLngHt().ht + " m")));
             }
             _handler.postDelayed(this, MARKER_UPDATE_INTERVAL);
         }

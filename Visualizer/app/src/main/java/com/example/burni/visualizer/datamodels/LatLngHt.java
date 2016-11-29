@@ -8,29 +8,31 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class LatLngHt {
 
-    public double _lat;
-    public double _lng;
-    public LatLng _latLng;
-    public double _ht;
+    public double lat;
+    public double lng;
+    public double ht;
 
     public LatLngHt(double lat, double lng, double ht) {
 
-        _lat = lat;
-        _lng = lng;
-        _latLng = new LatLng(lat, lng);
-        _ht = ht;
+        this.lat = lat;
+        this.lng = lng;
+        this.ht = ht;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof LatLngHt) {
-            if (       ((LatLngHt) o)._lat == _lat
-                    && ((LatLngHt) o)._lng == _lng
-                    && ((LatLngHt) o)._ht == _ht) {
+            if (       ((LatLngHt) o).lat == lat
+                    && ((LatLngHt) o).lng == lng
+                    && ((LatLngHt) o).ht == ht) {
 
                 return true;
             }
         }
         return false;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(lat, lng);
     }
 }

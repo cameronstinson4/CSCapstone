@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.burni.visualizer.datamodels.LatLngHt;
+import com.example.burni.visualizer.datamodels.SignalCoordinate;
 import com.example.burni.visualizer.fragments.ARFragment;
 import com.example.burni.visualizer.fragments.AboutFragment;
 import com.example.burni.visualizer.fragments.GMapFragment;
@@ -28,21 +29,27 @@ import com.example.burni.visualizer.fragments.SetupFragment;
 import com.example.burni.visualizer.fragments.ThirdViewFragment;
 import com.example.burni.visualizer.tasks.AlertServerTask;
 import com.example.burni.visualizer.tasks.UpdateDataTask;
+import com.example.burni.visualizer.web.ResultCallback;
+import com.example.burni.visualizer.web.RetrieveJsonArrayTask;
 import com.google.android.gms.maps.model.LatLngBounds;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ResultCallback {
 
     private boolean _broadcast;
     private MainActivity _this;
     private AlertServerTask _alertingServer;
-    private List<LatLngHt> _locations;
+    private ArrayList<SignalCoordinate> _locations;
     private LatLngBounds _boundary;
     private UpdateDataTask _updateDataTask;
     private SetupManager _setupManager;
+    private RetrieveJsonArrayTask _getSampleData;
 
 
     @Override
@@ -68,6 +75,8 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+        _getSampleData = new RetrieveJsonArrayTask(getApplicationContext(), this);
+        _getSampleData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl());
         _updateDataTask = new UpdateDataTask(_this);
         _updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         _alertingServer = new AlertServerTask(_this);
@@ -199,14 +208,15 @@ public class MainActivity extends AppCompatActivity
         _updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
-    public List<LatLngHt> getLocations() {
+    public List<SignalCoordinate> getLocations() {
 
         return _locations;
     }
     public boolean isBroadcasting() {
         return _broadcast;
     }
-    public void addLocations(List<LatLngHt> list) {
+    public void addLocations(List<SignalCoordinate> list) {
+
         _locations.addAll(list);
     }
     public LatLngBounds getBoundary() {
@@ -214,5 +224,15 @@ public class MainActivity extends AppCompatActivity
     }
     public SetupManager getSetupManager() {
         return _setupManager;
+    }
+
+    @Override
+    public void onResult(JSONArray array) {
+        try {
+            Toast.makeText(getApplicationContext(), array.getString(0), Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

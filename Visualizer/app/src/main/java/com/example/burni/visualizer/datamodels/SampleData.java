@@ -4,15 +4,13 @@ import java.util.List;
 
 public class SampleData
 {
-    public List<Coordinate> Coordinates;
+    public List<SignalCoordinate> signalCoordinates;
 
-    public SampleData() {}
-
-    public List<Coordinate> getCoordinates() {
-        return Coordinates;
+    public List<SignalCoordinate> getSignalCoordinates() {
+        return signalCoordinates;
     }
 
-    public void setCoordinates(List<Coordinate> coordinates) {
-        Coordinates = coordinates;
+    public void setSignalCoordinates(List<SignalCoordinate> signalCoordinates) {
+        this.signalCoordinates = signalCoordinates;
     }
 }
