@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Setup Fragment"
-        android:id="@+id/textView2"
-        android:layout_gravity="center" />
-</FrameLayout>
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/operationNameField"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="@string/http"
+        android:ems="10"
+        android:id="@+id/serverWebAddressField"
+        android:layout_above="@+id/operationNameField"
+        android:layout_alignStart="@+id/operationNameField"
+        android:layout_marginBottom="60dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberPassword"
+        android:ems="10"
+        android:layout_below="@+id/operationNameField"
+        android:layout_alignStart="@+id/operationNameField"
+        android:layout_marginTop="60dp"
+        android:id="@+id/serverPinField" />
+
+    <TextView
+        android:text="@string/server_pin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/operationNameField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/serverPin" />
+
+    <TextView
+        android:text="@string/server_web_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/serverWebAddressField"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="24dp"
+        android:id="@+id/serverWebAddress" />
+
+    <TextView
+        android:text="@string/operation_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/operationNameField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/operationName" />
+
+    <TextView
+        android:text="@string/setup_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/setupMessage"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Setup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/serverPinField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/setupButton" />
+</RelativeLayout>

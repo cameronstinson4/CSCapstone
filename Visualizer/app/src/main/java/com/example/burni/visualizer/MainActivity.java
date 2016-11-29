@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.content_frame, setFrag, null)
                     .addToBackStack(null)
                     .commit();
+            _boundary = SetupManager.getBoundaries();
+
         }
 
         _this = this;
@@ -79,6 +81,10 @@ public class MainActivity extends AppCompatActivity
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
+                if(!_setupManager.isSetup()) {
+                    return;
+                }
+
                 if (!_broadcast) {
                     _broadcast = true;
                     view.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{getResources().getColor(R.color.colorPersonFound)}));
@@ -135,6 +141,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
             return true;
         }
 
@@ -146,14 +153,14 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         FragmentManager fm = getFragmentManager();
 
-        if(!getSetupManager().isSetup()) {
+        int id = item.getItemId();
+
+        if(!getSetupManager().isSetup() && !(id == R.id.nav_about)) {
             fm.beginTransaction().replace(R.id.content_frame, new SetupFragment()).commit();
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }
-
-        int id = item.getItemId();
 
         if (id == R.id.nav_2dview) {
             fm.beginTransaction().replace(R.id.content_frame, new GMapFragment()).commit();
