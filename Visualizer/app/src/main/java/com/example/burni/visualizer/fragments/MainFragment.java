@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.example.burni.visualizer.MainActivity;
 import com.example.burni.visualizer.R;
-import com.example.burni.visualizer.SetupManager;
 
 public class MainFragment extends android.app.Fragment {
 

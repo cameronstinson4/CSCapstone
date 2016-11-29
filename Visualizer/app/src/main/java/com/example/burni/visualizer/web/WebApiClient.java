@@ -1,7 +1,5 @@
 package com.example.burni.visualizer.web;
 
-import com.example.burni.visualizer.datamodels.Coordinate;
-import com.example.burni.visualizer.datamodels.SampleData;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;

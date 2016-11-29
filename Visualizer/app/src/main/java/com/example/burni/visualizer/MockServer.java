@@ -7,8 +7,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.random;
-
 /**
  * Created by burni on 11/15/2016.
  */

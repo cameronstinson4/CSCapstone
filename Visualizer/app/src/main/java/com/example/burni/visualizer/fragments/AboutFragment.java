@@ -12,14 +12,9 @@ import com.example.burni.visualizer.R;
 
 public class AboutFragment extends android.app.Fragment {
 
-    private Context context;
-    private ProgressDialog loading;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        context = container.getContext();
 
         return inflater.inflate(R.layout.fragment_about, container,false);
     }

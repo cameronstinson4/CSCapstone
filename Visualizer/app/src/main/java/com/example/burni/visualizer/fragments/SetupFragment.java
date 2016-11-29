@@ -1,8 +1,5 @@
 package com.example.burni.visualizer.fragments;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -15,7 +12,6 @@ import android.widget.EditText;
 
 import com.example.burni.visualizer.MainActivity;
 import com.example.burni.visualizer.R;
-import com.example.burni.visualizer.SetupActivity;
 import com.example.burni.visualizer.SetupManager;
 
 public class SetupFragment extends android.app.Fragment {

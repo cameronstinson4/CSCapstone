@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,16 +15,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.burni.visualizer.datamodels.LatLngHt;
 import com.example.burni.visualizer.fragments.ARFragment;
 import com.example.burni.visualizer.fragments.AboutFragment;
 import com.example.burni.visualizer.fragments.GMapFragment;
+import com.example.burni.visualizer.fragments.MainFragment;
 import com.example.burni.visualizer.fragments.SettingsFragment;
 import com.example.burni.visualizer.fragments.SetupFragment;
 import com.example.burni.visualizer.fragments.ThirdViewFragment;
-import com.example.burni.visualizer.fragments.MainFragment;
 import com.example.burni.visualizer.tasks.AlertServerTask;
 import com.example.burni.visualizer.tasks.UpdateDataTask;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -49,13 +49,17 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        _this = this;
+        _broadcast = false;
+        _locations = new ArrayList<>();
+
         _setupManager = new SetupManager(getApplicationContext());
 
         if (_setupManager.isSetup()) {
             _boundary = SetupManager.getBoundaries();
         }
         else  {
-            SetupFragment setFrag= new SetupFragment();
+            SetupFragment setFrag = new SetupFragment();
             this.getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, setFrag, null)
                     .addToBackStack(null)
@@ -63,10 +67,6 @@ public class MainActivity extends AppCompatActivity
             _boundary = SetupManager.getBoundaries();
 
         }
-
-        _this = this;
-        _broadcast = false;
-        _locations = new ArrayList<>();
 
         _updateDataTask = new UpdateDataTask(_this);
         _updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    //TODO Remove this options menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -191,6 +190,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+
+        if (isBroadcasting()) {
+            _alertingServer = new AlertServerTask(this);
+            _alertingServer.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        _updateDataTask = new UpdateDataTask(this);
+        _updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
     public List<LatLngHt> getLocations() {

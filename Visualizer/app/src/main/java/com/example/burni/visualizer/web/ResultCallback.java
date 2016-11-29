@@ -7,5 +7,5 @@ import org.json.JSONArray;
  */
 public interface ResultCallback {
 
-    public void onResult(JSONArray array);
+    void onResult(JSONArray array);
 }

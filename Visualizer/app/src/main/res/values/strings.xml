@@ -33,5 +33,7 @@
     <string name="server_pin">Server PIN:</string>
     <string name="http">http://</string>
     <string name="reset_configuration">Reset Configuration</string>
+    <string name="about_text">Survivor Location Visualizer\nSenior Capstone Project\nCameron Stinson\nClass of 2016</string>
+    <string name="signal">Signal</string>
 
 </resources>
