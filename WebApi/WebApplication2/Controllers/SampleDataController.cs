@@ -11,17 +11,22 @@ namespace WebApplication2.Controllers
 {
     public class SampleDataController : ApiController
     {
-        public SampleData sampleData = new SampleData()
-        {
-            Coordinates = new Coordinate[] {
-                new Coordinate(),
-                new Coordinate()
-            }
-        };
+
 
         public SampleData Get()
         {
-            return sampleData;
+            return new SampleData()
+            {
+                Coordinates = new Coordinate[] {
+                     new Coordinate(),
+                     new Coordinate()
+                }
+            };
+        }
+
+        public void Post([FromBody]double SNR, [FromBody]int droneId,[FromBody]Coordinate droneLocation)
+        {
+
         }
     }
 }

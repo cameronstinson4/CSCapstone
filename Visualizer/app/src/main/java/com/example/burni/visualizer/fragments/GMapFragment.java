@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 
 import com.example.burni.visualizer.MainActivity;
 import com.example.burni.visualizer.R;
+import com.example.burni.visualizer.datamodels.LatLngHt;
 import com.example.burni.visualizer.web.ResultCallback;
-import com.example.burni.visualizer.web.RetrieveJsonArrayTask;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -29,7 +28,7 @@ public class GMapFragment extends android.app.Fragment implements OnMapReadyCall
 
     private ProgressDialog _dialog;
     private GoogleMap _goolgeMap;
-    private List<LatLng> _locations;
+    private List<LatLngHt> _locations;
     private List<Marker> _markers;
     private MapFragment _mapFragment;
     private LatLngBounds _boundary;
@@ -37,7 +36,7 @@ public class GMapFragment extends android.app.Fragment implements OnMapReadyCall
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        _markers = new ArrayList<Marker>();
+        _markers = new ArrayList<>();
         _locations = ((MainActivity) getActivity()).getLocations();
         _boundary = ((MainActivity) getActivity()).getBoundary();
 
@@ -62,7 +61,10 @@ public class GMapFragment extends android.app.Fragment implements OnMapReadyCall
         _goolgeMap = googleMap;
 
         for (int i = 0; i < _locations.size(); i++) {
-            _markers.add(_goolgeMap.addMarker(new MarkerOptions().title("Survivor " + i).position(_locations.get(i))));
+            _markers.add(_goolgeMap.addMarker(
+                    new MarkerOptions().title("Survivor " + i)
+                            .position(_locations.get(i)._latLng)
+                            .snippet(getString(R.string.height) + ": " + _locations.get(i)._ht + " m")));
 
         }
 

@@ -13,7 +13,8 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
-import com.example.burni.visualizer.Broadcaster;
+import com.example.burni.visualizer.MainActivity;
+import com.example.burni.visualizer.R;
 import com.example.burni.visualizer.web.WebApiClient;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -23,18 +24,17 @@ import static android.content.Context.LOCATION_SERVICE;
  * Created by burni on 10/17/2016.
  */
 
-public class AlertServerTask extends AsyncTask<String, Void, String> {
+public class AlertServerTask extends AsyncTask<String, Void, Void> {
 
-    private Activity _parentActivity;
+
+    private MainActivity _parentActivity;
     private LocationManager _locationManager;
     private LocationListener _locationListener;
     private Location _location;
-    private Broadcaster _broadcaster;
 
-    public AlertServerTask(Activity activity, Broadcaster broadcaster) {
+    public AlertServerTask(MainActivity activity) {
         _parentActivity = activity;
         _locationManager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
-        _broadcaster = broadcaster;
         _locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -62,15 +62,15 @@ public class AlertServerTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected Void doInBackground(String... params) {
 
         if (ActivityCompat.checkSelfPermission(_parentActivity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(_parentActivity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return "FAILURE";
+            return null;
         }
 
 
-        while (true) {
+        while (!Thread.interrupted()) {
             if (_location != null) {
                 LatLng out = new LatLng(_location.getLatitude(), _location.getLongitude());
                 WebApiClient.alertServerSurviviorFound(out);
@@ -80,7 +80,7 @@ public class AlertServerTask extends AsyncTask<String, Void, String> {
                     @Override
                     public void run() {
                         Toast.makeText(_parentActivity.getBaseContext()
-                                , _location.getLatitude() + " " + _location.getLongitude() + "\n Broadcasting your position."
+                                , _parentActivity.getString(R.string.alert_server) + "\n" + _location.getLatitude() + " " + _location.getLongitude()
                                 , Toast.LENGTH_LONG).show();
                     }
                 });
@@ -92,7 +92,7 @@ public class AlertServerTask extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
                 break;
             }
-            if (!_broadcaster.isBroadcasting()) {
+            if (!_parentActivity.isBroadcasting()) {
                 _locationManager.removeUpdates(_locationListener);
                 _locationListener = null;
                 _locationManager = null;

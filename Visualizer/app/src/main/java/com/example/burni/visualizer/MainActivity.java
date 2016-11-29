@@ -3,6 +3,7 @@ package com.example.burni.visualizer;
 import android.annotation.TargetApi;
 import android.app.FragmentManager;
 import android.content.res.ColorStateList;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.burni.visualizer.datamodels.LatLngHt;
 import com.example.burni.visualizer.fragments.ARFragment;
 import com.example.burni.visualizer.fragments.AboutFragment;
 import com.example.burni.visualizer.fragments.GMapFragment;
@@ -25,31 +27,48 @@ import com.example.burni.visualizer.fragments.SetupFragment;
 import com.example.burni.visualizer.fragments.ThirdViewFragment;
 import com.example.burni.visualizer.fragments.MainFragment;
 import com.example.burni.visualizer.tasks.AlertServerTask;
-import com.google.android.gms.maps.model.LatLng;
+import com.example.burni.visualizer.tasks.UpdateDataTask;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Broadcaster {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    public boolean _broadcast;
-    private MainActivity _uhhthis;
+    private boolean _broadcast;
+    private MainActivity _this;
     private AlertServerTask _alertingServer;
-    private List<LatLng> _locations;
+    private List<LatLngHt> _locations;
     private LatLngBounds _boundary;
+    private UpdateDataTask _updateDataTask;
+    private SetupManager _setupManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _uhhthis = this;
+
+        _setupManager = new SetupManager(getApplicationContext());
+
+        if (_setupManager.isSetup()) {
+            _boundary = SetupManager.getBoundaries();
+        }
+        else  {
+            SetupFragment setFrag= new SetupFragment();
+            this.getFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, setFrag, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+        _this = this;
         _broadcast = false;
-
         _locations = new ArrayList<>();
-        DataSeeder.seedLocationData(_locations);
 
-        _boundary = SetupManager.getBoundaries();
+        _updateDataTask = new UpdateDataTask(_this);
+        _updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        _alertingServer = new AlertServerTask(_this);
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,16 +79,13 @@ public class MainActivity extends AppCompatActivity
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-
-                AlertServerTask alertServerTask = new AlertServerTask(_uhhthis, _uhhthis);
-
                 if (!_broadcast) {
                     _broadcast = true;
                     view.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{getResources().getColor(R.color.colorPersonFound)}));
 
-                    Toast.makeText(getApplicationContext(), "Broadcasting your position.", Toast.LENGTH_LONG).show();
-                    _alertingServer = new AlertServerTask(_uhhthis, _uhhthis);
-                    _alertingServer.execute("", "", "");
+                    Toast.makeText(getApplicationContext(), getString(R.string.alert_server), Toast.LENGTH_LONG).show();
+                    _alertingServer = new AlertServerTask(_this);
+                    _alertingServer.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
                 else if (_broadcast) {
                     _broadcast = false;
@@ -109,6 +125,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    //TODO Remove this options menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -129,6 +146,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         FragmentManager fm = getFragmentManager();
 
+        if(!getSetupManager().isSetup()) {
+            fm.beginTransaction().replace(R.id.content_frame, new SetupFragment()).commit();
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
+
         int id = item.getItemId();
 
         if (id == R.id.nav_2dview) {
@@ -145,7 +169,6 @@ public class MainActivity extends AppCompatActivity
             fm.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
         }
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -154,21 +177,29 @@ public class MainActivity extends AppCompatActivity
     public void onPause() {
         super.onPause();
 
+        _updateDataTask.cancel(true);
+        _alertingServer.cancel(true);
+
     }
     @Override
-    public boolean isBroadcasting() {
+    public void onResume() {
+        super.onResume();
 
-        return _broadcast;
     }
-    public List<LatLng> getLocations() {
+    public List<LatLngHt> getLocations() {
 
         return _locations;
     }
-    public void checkConnectionToServer() {
-
+    public boolean isBroadcasting() {
+        return _broadcast;
     }
-
+    public void addLocations(List<LatLngHt> list) {
+        _locations.addAll(list);
+    }
     public LatLngBounds getBoundary() {
         return _boundary;
+    }
+    public SetupManager getSetupManager() {
+        return _setupManager;
     }
 }

@@ -15,15 +15,14 @@ import com.example.burni.visualizer.SetupActivity;
 public class SetupFragment extends android.app.Fragment {
 
     private Context context;
-    private ProgressDialog loading;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        context = container.getContext();
-        Intent i = new Intent(context, SetupActivity.class);
-        startActivity(i);
+        //context = container.getContext();
+        //Intent i = new Intent(context, SetupActivity.class);
+        //tartActivity(i);
         return inflater.inflate(R.layout.fragment_setup, container,false);
     }
 
