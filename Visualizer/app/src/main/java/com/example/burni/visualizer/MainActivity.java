@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.burni.visualizer.datamodels.LatLngHt;
 import com.example.burni.visualizer.datamodels.SignalCoordinate;
 import com.example.burni.visualizer.fragments.ARFragment;
 import com.example.burni.visualizer.fragments.AboutFragment;
@@ -28,29 +28,28 @@ import com.example.burni.visualizer.fragments.SettingsFragment;
 import com.example.burni.visualizer.fragments.SetupFragment;
 import com.example.burni.visualizer.fragments.ThirdViewFragment;
 import com.example.burni.visualizer.tasks.AlertServerTask;
-import com.example.burni.visualizer.tasks.UpdateDataTask;
+import com.example.burni.visualizer.web.GetBoundaryTask;
+import com.example.burni.visualizer.web.GetLocationsTask;
+import com.example.burni.visualizer.web.GetJsonDataTaskBase;
 import com.example.burni.visualizer.web.ResultCallback;
-import com.example.burni.visualizer.web.RetrieveJsonArrayTask;
 import com.google.android.gms.maps.model.LatLngBounds;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ResultCallback {
+        implements NavigationView.OnNavigationItemSelectedListener, ResultCallback{
+
+    final int UPDATE_INTERVAL = 5000;
 
     private boolean _broadcast;
     private MainActivity _this;
     private AlertServerTask _alertingServer;
     private ArrayList<SignalCoordinate> _locations;
     private LatLngBounds _boundary;
-    private UpdateDataTask _updateDataTask;
     private SetupManager _setupManager;
-    private RetrieveJsonArrayTask _getSampleData;
-
+    private GetJsonDataTaskBase _getSampleData;
+    private Handler _getNewDataHandler  = new Handler();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +73,13 @@ public class MainActivity extends AppCompatActivity
             _boundary = SetupManager.getBoundaries();
 
         }
-
-        _getSampleData = new RetrieveJsonArrayTask(getApplicationContext(), this);
-        _getSampleData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl());
-        _updateDataTask = new UpdateDataTask(_this);
-        _updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        GetJsonDataTaskBase getBoundaryData = new GetBoundaryTask(this);
+        getBoundaryData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl() + "boundary");
+        _getSampleData = new GetLocationsTask(this);
+        _getSampleData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl() + "sampledata");
         _alertingServer = new AlertServerTask(_this);
+        _getNewDataHandler.postDelayed(updateLocations, UPDATE_INTERVAL);
+
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity
     public void onPause() {
         super.onPause();
 
-        _updateDataTask.cancel(true);
         _alertingServer.cancel(true);
+        _getNewDataHandler.removeCallbacks(updateLocations);
 
     }
     @Override
@@ -204,8 +204,7 @@ public class MainActivity extends AppCompatActivity
             _alertingServer = new AlertServerTask(this);
             _alertingServer.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        _updateDataTask = new UpdateDataTask(this);
-        _updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        _getNewDataHandler.postDelayed(updateLocations, UPDATE_INTERVAL);
 
     }
     public List<SignalCoordinate> getLocations() {
@@ -219,6 +218,10 @@ public class MainActivity extends AppCompatActivity
 
         _locations.addAll(list);
     }
+    public void setLocations(List<SignalCoordinate> list) {
+
+        _locations = (ArrayList<SignalCoordinate>) list;
+    }
     public LatLngBounds getBoundary() {
         return _boundary;
     }
@@ -227,12 +230,33 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResult(JSONArray array) {
-        try {
-            Toast.makeText(getApplicationContext(), array.getString(0), Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public void onResult(Object obj) {
+        if (obj == null) {
+            Toast.makeText(getApplicationContext(), getString(R.string.network_error), Toast.LENGTH_LONG).show();
+            return;
         }
+        if (obj instanceof LatLngBounds) {
+            _boundary = (LatLngBounds) obj;
 
+        }
+        if (obj instanceof List) {
+            if (!((List) obj).isEmpty()) {
+                if (((List) obj).get(0) instanceof SignalCoordinate) {
+                    setLocations((List<SignalCoordinate>) obj);
+                }
+            }
+        }
     }
+
+    private Runnable updateLocations = new Runnable() {
+        @Override
+        public void run() {
+
+            _getSampleData = new GetLocationsTask(_this);
+            _getSampleData.execute(_setupManager.getUrl() + "sampledata");
+            _getNewDataHandler.postDelayed(this, UPDATE_INTERVAL);
+
+        }
+    };
+
 }

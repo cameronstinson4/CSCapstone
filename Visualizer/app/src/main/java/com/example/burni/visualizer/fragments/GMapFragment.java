@@ -15,11 +15,4 @@ public class GMapFragment extends MapFragmentBase{
 
         _goolgeMap.moveCamera(CameraUpdateFactory.newLatLngBounds(_boundary, 10));
     }
-
-    @Override
-    public void onResult(JSONArray array) {
-        if (_goolgeMap != null) {
-            onMapReady(_goolgeMap);
-        }
-    }
 }

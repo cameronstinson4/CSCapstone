@@ -1,11 +1,15 @@
 package com.example.burni.visualizer.web;
 
-import org.json.JSONArray;
+import com.example.burni.visualizer.datamodels.SignalCoordinate;
+
+import java.util.List;
 
 /**
- * Created by stinsocb on 7/14/2016.
+ * Created by burni on 12/1/2016.
  */
+
 public interface ResultCallback {
 
-    void onResult(JSONArray array);
+    void onResult(Object obj);
+
 }

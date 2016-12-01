@@ -7,6 +7,6 @@ namespace WebApplication2.Models
 {
     public class SampleData
     {
-        public Coordinate[] Coordinates { get; set; } 
+        public List<Coordinate> Coordinates { get; set; } 
     }
 }

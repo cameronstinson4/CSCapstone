@@ -152,3 +152,9 @@ C:\git\CSCapstone\WebApi\WebApplication2\bin\System.Web.Http.Owin.xml
 C:\git\CSCapstone\WebApi\WebApplication2\obj\Debug\WebApplication2.csprojResolveAssemblyReference.cache
 C:\git\CSCapstone\WebApi\WebApplication2\obj\Debug\WebApplication2.dll
 C:\git\CSCapstone\WebApi\WebApplication2\obj\Debug\WebApplication2.pdb
+C:\git\CSCapstone\WebApi\WebApplication2\bin\GeoAPI.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\NetTopologySuite.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\PowerCollections.dll
+C:\git\CSCapstone\WebApi\WebApplication2\bin\GeoAPI.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\NetTopologySuite.xml
+C:\git\CSCapstone\WebApi\WebApplication2\bin\PowerCollections.xml

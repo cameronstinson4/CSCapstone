@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.burni.visualizer.MainActivity;
 import com.example.burni.visualizer.R;
-import com.example.burni.visualizer.web.WebApiClient;
 import com.google.android.gms.maps.model.LatLng;
 
 import static android.content.Context.LOCATION_SERVICE;
@@ -72,7 +71,7 @@ public class AlertServerTask extends AsyncTask<String, Void, Void> {
         while (!Thread.interrupted()) {
             if (_location != null) {
                 LatLng out = new LatLng(_location.getLatitude(), _location.getLongitude());
-                WebApiClient.alertServerSurviviorFound(out);
+                //WebApiClient.alertServerSurviviorFound(out);
 
                 //Alert user that they are broadcasting a survivor location
                 _parentActivity.runOnUiThread(new Runnable() {

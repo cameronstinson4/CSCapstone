@@ -36,5 +36,6 @@
     <string name="about_text">Survivor Location Visualizer\nSenior Capstone Project\nCameron Stinson\nClass of 2016</string>
     <string name="signal">Signal</string>
     <string name="tilt_help">Slide with two fingers to adjust the tilt</string>
+    <string name="network_error">Network Error \n No response from server</string>
 
 </resources>
