@@ -24,6 +24,10 @@ public class GetBoundaryTask extends GetJsonDataTaskBase {
 
     private LatLngBounds parseBoundaryData(JSONObject object) {
 
+        if (object == null) {
+            return null;
+        }
+
         LatLngBounds bounds = null;
 
         try {

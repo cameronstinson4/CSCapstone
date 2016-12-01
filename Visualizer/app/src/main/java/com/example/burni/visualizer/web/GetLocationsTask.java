@@ -28,6 +28,10 @@ public class GetLocationsTask extends GetJsonDataTaskBase {
 
     private ArrayList<SignalCoordinate> parseJsonData(JSONObject json) {
 
+        if (json == null) {
+            return null;
+        }
+
         JSONArray array = null;
         try {
             array = json.getJSONArray("Coordinates");
