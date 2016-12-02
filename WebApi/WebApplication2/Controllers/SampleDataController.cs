@@ -13,7 +13,7 @@ namespace WebApplication2.Controllers
 
     public class SampleDataController : ApiController
     {
-        public const int consolidationConstant = 10;
+        private const int consolidationConstant = 10;
 
         private static List<Coordinate> activeLocations = new List<Coordinate>();
         private static List<DroneData> droneData = new List<DroneData>();
@@ -25,28 +25,11 @@ namespace WebApplication2.Controllers
             {
                 seedOriginalData();
             }
-
             return new SampleData()
             {
                 Coordinates = activeLocations
             };
         }
-
-        //public IHttpActionResult Post([FromBody]Coordinate value)
-        //{
-        //    if (value != null)
-        //    {
-        //        activeLocations.Add(value);
-        //        consolidateLocations();
-        //        return Ok();
-        //    }
-        //    else
-        //    {
-        //        return BadRequest();
-        //    }
-
-
-        //}
         
         public IHttpActionResult Post([FromBody]DroneData value)
         {
@@ -59,10 +42,9 @@ namespace WebApplication2.Controllers
             {
                 return BadRequest();
             }
-
-            //do stuff with data
-
         }
+
+
 
         private void processDroneData(DroneData newData)
         {
@@ -119,12 +101,18 @@ namespace WebApplication2.Controllers
                     string result = reader.ReadToEnd();
                     string[] words = result.Split(" ".ToArray());
                     string[] secondwords = words[1].Split("/".ToArray());
-                    double lat = double.Parse(words[0]);
-                    double lng = double.Parse(secondwords[0]);
+                    try
+                    {
+                        double lat = double.Parse(words[0]);
+                        double lng = double.Parse(secondwords[0]);
 
-                    output = new Coordinate(new LatLng(lat, lng), 0);
+                        output = new Coordinate(new LatLng(lat, lng), consolidationConstant);
 
-                    addNewCoordinate(output);
+                        addNewCoordinate(output);
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
             }
         }

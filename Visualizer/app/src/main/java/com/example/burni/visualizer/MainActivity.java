@@ -164,8 +164,8 @@ public class MainActivity extends AppCompatActivity
             fm.beginTransaction().replace(R.id.content_frame, new GMapFragment()).commit();
         } else if (id == R.id.nav_3dview) {
             fm.beginTransaction().replace(R.id.content_frame, new ThirdViewFragment()).commit();
-        } else if (id == R.id.nav_arview) {
-            fm.beginTransaction().replace(R.id.content_frame, new ARFragment()).commit();
+//        } else if (id == R.id.nav_arview) {
+//            fm.beginTransaction().replace(R.id.content_frame, new ARFragment()).commit();
         } else if (id == R.id.nav_setup) {
             fm.beginTransaction().replace(R.id.content_frame, new SetupFragment()).commit();
         } else if (id == R.id.nav_settings) {
