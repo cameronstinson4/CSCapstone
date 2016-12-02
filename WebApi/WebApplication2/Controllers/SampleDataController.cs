@@ -4,17 +4,19 @@ using WebApplication2.Models;
 using System.Device;
 using System.Device.Location;
 using System.Linq;
+using System.Diagnostics;
+using System.IO;
+using System;
 
 namespace WebApplication2.Controllers
 {
 
     public class SampleDataController : ApiController
     {
-        public const int consolidationConstant = 5;
+        public const int consolidationConstant = 10;
 
         private static List<Coordinate> activeLocations = new List<Coordinate>();
         private static List<DroneData> droneData = new List<DroneData>();
-        private static List<DroneDataSet> droneDataSets = new List<DroneDataSet>();
 
         //Get coordinates
         public SampleData Get()
@@ -62,33 +64,10 @@ namespace WebApplication2.Controllers
 
         }
 
-        //this doesnt workmwell
-        private void consolidateLocations()
-        {
-            //foreach (Coordinate c in activeLocations)
-            //{
-            //    foreach (Coordinate j in activeLocations)
-            //    {
-            //        if (c.Equals(j))
-            //        {
-            //            break;
-            //        }
-            //        if (distanceBetween(c,j) < consolidationConstant)
-            //        {
-            //            c.LatLngHt.lat = (c.LatLngHt.lat + j.LatLngHt.lat)/2;
-            //            c.LatLngHt.lng = (c.LatLngHt.lng + j.LatLngHt.lng)/2;
-            //            c.Accuracy = c.Accuracy > distanceBetween(c, j) + j.Accuracy ? c.Accuracy : distanceBetween(c, j) + j.Accuracy;
-            //            activeLocations.Remove(j);
-            //            break;
-            //        }        
-            //    }
-            //}
-        }
-
         private void processDroneData(DroneData newData)
         {
 
-            if (droneData.Count < 3)
+            if (droneData.Count < 2)
             {
                 droneData.Add(newData);
 
@@ -108,9 +87,8 @@ namespace WebApplication2.Controllers
 
                 if (builder.canBuild())
                 {
-                    droneDataSets.Add(builder.build());
                     droneData = droneData.Where(x => x.ScanId != newData.ScanId).ToList<DroneData>(); //removes data that was sent to dronedataset
-                    calculateLocation();
+                    trilaterate(builder.build());
                 }
                 else
                 {
@@ -119,15 +97,58 @@ namespace WebApplication2.Controllers
             }
         }
 
-        private void calculateLocation()
+        private void trilaterate(DroneDataSet dds)
         {
+            Coordinate output;
 
+            // full path of python interpreter  
+            string python = @"C:\Python\python.exe";
+
+            // python app to call  
+            string myPythonApp = @"C:\Python\trilaterate.py";
+
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = python;//cmd is full path to python.exe
+            start.Arguments = myPythonApp + " " + dds.ToString();//args is path to .py file and any cmd line args
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            using (Process process = Process.Start(start))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    string[] words = result.Split(" ".ToArray());
+                    string[] secondwords = words[1].Split("/".ToArray());
+                    double lat = double.Parse(words[0]);
+                    double lng = double.Parse(secondwords[0]);
+
+                    output = new Coordinate(new LatLng(lat, lng), 0);
+
+                    addNewCoordinate(output);
+                }
+            }
         }
 
-        private Coordinate triangulate()
+        private void addNewCoordinate(Coordinate newCoord)
         {
+            foreach (Coordinate c in activeLocations)
+            {
+                if (distanceBetween(c, newCoord) < consolidationConstant)
+                {
+                    averageCoordinates(c, newCoord);
+                    return;
+                }
+            }
 
-            return null;
+            activeLocations.Add(newCoord);
+        }
+
+        private void averageCoordinates(Coordinate one, Coordinate two)
+        {
+            one.Accuracy = distanceBetween(one, two);
+            one.LatLng.lat = (one.LatLng.lat + two.LatLng.lat)/2;
+            one.LatLng.lng = (one.LatLng.lng + two.LatLng.lng)/2;
+            
         }
 
         private double distanceBetween(Coordinate one, Coordinate two)
@@ -137,7 +158,7 @@ namespace WebApplication2.Controllers
             var eCoord = new GeoCoordinate(two.LatLng.lat, two.LatLng.lng);
 
             return sCoord.GetDistanceTo(eCoord);
- 
+
         }
 
         private void seedOriginalData()
@@ -151,7 +172,18 @@ namespace WebApplication2.Controllers
             activeLocations.Add(new Coordinate(pos2, 5));
             activeLocations.Add(new Coordinate(pos3, 7));
 
-
+            droneData.Add(
+                new DroneData(
+                    "swxedcrfvtgb"
+                    , 114.207460633365
+                    , new LatLng(37.06431008815, -76.49267291623)
+                    , "1"));
+            droneData.Add(
+                new DroneData(
+                    "qzawsxedcrfvg"
+                    , 211.437352892073
+                    , new LatLng(37.06425093355, -76.49134212943)
+                    , "1"));
         }
     }
 }

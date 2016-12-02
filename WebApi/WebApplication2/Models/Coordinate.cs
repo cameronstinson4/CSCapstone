@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Device.Location;
 
 namespace WebApplication2.Models
 {

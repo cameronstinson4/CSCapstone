@@ -12,7 +12,7 @@ namespace WebApplication2.Models
         public DroneDataSet(params DroneData[] input )
         {
             
-            if (input.Length >= 3)
+            if (input.Length < 3)
             {
                 throw new Exception("Must have atleast 3 input drone datas");
             }
@@ -27,6 +27,18 @@ namespace WebApplication2.Models
 
             droneDataSet = new List<DroneData>();
             droneDataSet.AddRange(input);
+        }
+        
+        override public string ToString()
+        {
+            string output = "";
+
+            foreach(DroneData dd in droneDataSet)
+            {
+                output = $" {output} {dd.LatLng.lat.ToString("F7")} {dd.LatLng.lng.ToString("F7")} {(dd.Distance/1000).ToString("F9")}";
+            }
+
+            return output.Trim();
         }
     }
 
