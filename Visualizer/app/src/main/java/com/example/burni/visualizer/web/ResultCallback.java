@@ -2,6 +2,8 @@ package com.example.burni.visualizer.web;
 
 import com.example.burni.visualizer.datamodels.SignalCoordinate;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,6 @@ import java.util.List;
 
 public interface ResultCallback {
 
-    void onResult(Object obj);
+    void onResult(List<SignalCoordinate> list);
 
 }

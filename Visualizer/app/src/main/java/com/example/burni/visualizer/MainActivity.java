@@ -28,11 +28,9 @@ import com.example.burni.visualizer.fragments.SettingsFragment;
 import com.example.burni.visualizer.fragments.SetupFragment;
 import com.example.burni.visualizer.fragments.ThirdViewFragment;
 import com.example.burni.visualizer.web.AlertServerTask;
-import com.example.burni.visualizer.web.GetBoundaryTask;
 import com.example.burni.visualizer.web.GetLocationsTask;
 import com.example.burni.visualizer.web.GetJsonDataTaskBase;
 import com.example.burni.visualizer.web.ResultCallback;
-import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,40 +44,32 @@ public class MainActivity extends AppCompatActivity
     private MainActivity _this;
     private AlertServerTask _alertingServer;
     private ArrayList<SignalCoordinate> _locations;
-    private LatLngBounds _boundary;
     private SetupManager _setupManager;
     private GetJsonDataTaskBase _getSampleData;
-    private Handler _getNewDataHandler  = new Handler();;
+    private Handler _getNewDataHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _this = this;
-        _broadcast = false;
-        _locations = new ArrayList<>();
-
         _setupManager = new SetupManager(getApplicationContext());
 
-        if (_setupManager.isSetup()) {
-            _boundary = SetupManager.getBoundaries();
-        }
-        else  {
+        if (!_setupManager.isSetup()) {
             SetupFragment setFrag = new SetupFragment();
             this.getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, setFrag, null)
                     .addToBackStack(null)
                     .commit();
-            _boundary = SetupManager.getBoundaries();
-
         }
-        GetJsonDataTaskBase getBoundaryData = new GetBoundaryTask(this);
-        getBoundaryData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl() + "boundary");
+
+        _this = this;
+        _broadcast = false;
+        _locations = new ArrayList<>();
         _getSampleData = new GetLocationsTask(_this);
         _getSampleData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl() + "sampledata");
         _alertingServer = new AlertServerTask(_this);
+        _getNewDataHandler  = new Handler();
         _getNewDataHandler.postDelayed(updateLocations, UPDATE_INTERVAL);
-
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -223,29 +213,19 @@ public class MainActivity extends AppCompatActivity
 
         _locations = (ArrayList<SignalCoordinate>) list;
     }
-    public LatLngBounds getBoundary() {
-        return _boundary;
-    }
+
     public SetupManager getSetupManager() {
         return _setupManager;
     }
 
     @Override
-    public void onResult(Object obj) {
-        if (obj == null) {
+    public void onResult(List<SignalCoordinate> list) {
+        if (list == null) {
             Toast.makeText(getApplicationContext(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (obj instanceof LatLngBounds) {
-            _boundary = (LatLngBounds) obj;
-
-        }
-        if (obj instanceof List) {
-            if (!((List) obj).isEmpty()) {
-                if (((List) obj).get(0) instanceof SignalCoordinate) {
-                    setLocations((List<SignalCoordinate>) obj);
-                }
-            }
+        else {
+            setLocations((List<SignalCoordinate>) list);
         }
     }
 

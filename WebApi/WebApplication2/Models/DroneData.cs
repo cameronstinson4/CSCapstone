@@ -8,9 +8,19 @@ namespace WebApplication2.Models
     public class DroneData
     {
         public string DroneId { get; set; }
-        public double Snr { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Z { get; set; }
+
+        public double Distance { get; set; }
+
+        public LatLng LatLng { get; set; }
+
+        public string ScanId { get; set; }
+
+        public DroneData(string droneId, double distance, LatLng latLng, string scanId)
+        {
+            DroneId = droneId;
+            Distance = distance;
+            LatLng = latLng;
+            ScanId = scanId;
+        }
     }
 }

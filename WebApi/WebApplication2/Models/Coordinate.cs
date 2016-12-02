@@ -6,14 +6,14 @@ namespace WebApplication2.Models
     {
         public Guid Id { get; set; }
 
-        public LatLngHt LatLngHt { get; set; }
+        public LatLng LatLng { get; set; }
 
         public double Accuracy { get; set; }
 
-        public Coordinate(LatLngHt latLngHt, double accuracy)
+        public Coordinate(LatLng latLng, double accuracy)
         {
             this.Id = Guid.NewGuid();
-            this.LatLngHt = latLngHt;
+            this.LatLng = latLng;
             this.Accuracy = accuracy;
         
         }

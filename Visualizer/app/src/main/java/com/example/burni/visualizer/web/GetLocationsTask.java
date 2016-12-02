@@ -1,7 +1,7 @@
 package com.example.burni.visualizer.web;
 
-import com.example.burni.visualizer.datamodels.LatLngHt;
 import com.example.burni.visualizer.datamodels.SignalCoordinate;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,10 +51,10 @@ public class GetLocationsTask extends GetJsonDataTaskBase {
                 builder.setIdentifier((String) obj.get("Id"));
                 builder.setAccuracy((double) obj.get("Accuracy"));
 
-                obj = obj.getJSONObject("LatLngHt");
+                obj = obj.getJSONObject("LatLng");
 
-                builder.setLatLngHt(
-                        new LatLngHt((double) obj.get("lat"), (double) obj.get("lng"), (double) obj.get("ht")));
+                builder.setLatLng(
+                        new LatLng((double) obj.get("lat"), (double) obj.get("lng")));
 
                 out.add(builder.build());
 

@@ -228,12 +228,11 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BoundaryController.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\DroneData.cs" />
+    <Compile Include="Models\DroneDataSet.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\LatLngHt.cs" />
-    <Compile Include="Models\OperationBoundary.cs" />
+    <Compile Include="Models\LatLng.cs" />
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

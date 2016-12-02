@@ -1,16 +1,14 @@
 ﻿namespace WebApplication2.Models
 {
-    public class LatLngHt
+    public class LatLng
     {
         public double lat { get; set; }
         public double lng { get; set; }
-        public double ht { get; set; }
 
-        public LatLngHt(double lat, double lng, double ht)
+        public LatLng(double lat, double lng)
         {
             this.lat = lat;
             this.lng = lng;
-            this.ht = ht;
         }
     }
 }

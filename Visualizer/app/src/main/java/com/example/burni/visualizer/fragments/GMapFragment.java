@@ -12,7 +12,5 @@ public class GMapFragment extends MapFragmentBase{
         super.onMapReady(googleMap);
 
         _goolgeMap.getUiSettings().setTiltGesturesEnabled(false);
-
-        _goolgeMap.moveCamera(CameraUpdateFactory.newLatLngBounds(_boundary, 10));
     }
 }

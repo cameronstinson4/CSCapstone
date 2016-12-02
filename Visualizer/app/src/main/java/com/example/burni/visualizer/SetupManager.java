@@ -2,6 +2,7 @@ package com.example.burni.visualizer;
 
 import android.content.Context;
 
+import com.example.burni.visualizer.web.ResultCallback;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.io.BufferedReader;
@@ -23,7 +24,7 @@ public class SetupManager {
     private Context _context;
     private String _filePath;
 
-    public SetupManager(Context context) {
+    public SetupManager(Context context){
         _context = context;
         _filePath = _context.getFilesDir() + "/setup.json";
     }
@@ -40,11 +41,6 @@ public class SetupManager {
         return true;
     }
 
-    public static LatLngBounds getBoundaries() {
-        //TODO
-        return MockServer.getBoundaries();
-    }
-
     public void setup(String URL, String name, String pin) {
 
         try {
@@ -56,7 +52,6 @@ public class SetupManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void deleteFile() {
