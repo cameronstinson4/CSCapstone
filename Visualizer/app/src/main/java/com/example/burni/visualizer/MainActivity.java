@@ -27,7 +27,7 @@ import com.example.burni.visualizer.fragments.MainFragment;
 import com.example.burni.visualizer.fragments.SettingsFragment;
 import com.example.burni.visualizer.fragments.SetupFragment;
 import com.example.burni.visualizer.fragments.ThirdViewFragment;
-import com.example.burni.visualizer.tasks.AlertServerTask;
+import com.example.burni.visualizer.web.AlertServerTask;
 import com.example.burni.visualizer.web.GetBoundaryTask;
 import com.example.burni.visualizer.web.GetLocationsTask;
 import com.example.burni.visualizer.web.GetJsonDataTaskBase;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         }
         GetJsonDataTaskBase getBoundaryData = new GetBoundaryTask(this);
         getBoundaryData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl() + "boundary");
-        _getSampleData = new GetLocationsTask(this);
+        _getSampleData = new GetLocationsTask(_this);
         _getSampleData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl() + "sampledata");
         _alertingServer = new AlertServerTask(_this);
         _getNewDataHandler.postDelayed(updateLocations, UPDATE_INTERVAL);
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
                     _broadcast = true;
                     view.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{getResources().getColor(R.color.colorPersonFound)}));
 
-                    Toast.makeText(getApplicationContext(), getString(R.string.alert_server), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.alert_server), Toast.LENGTH_SHORT).show();
                     _alertingServer = new AlertServerTask(_this);
                     _alertingServer.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity
     public void onPause() {
         super.onPause();
 
+        _alertingServer.stopUpdates();
         _alertingServer.cancel(true);
         _getNewDataHandler.removeCallbacks(updateLocations);
 
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResult(Object obj) {
         if (obj == null) {
-            Toast.makeText(getApplicationContext(), getString(R.string.network_error), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
             return;
         }
         if (obj instanceof LatLngBounds) {
