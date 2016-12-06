@@ -30,7 +30,7 @@ public class SettingsFragment extends android.app.Fragment {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).getSetupManager().deleteFile();
+                ((MainActivity) getActivity()).getSetupManager().resetSetup();
                 getActivity().getFragmentManager().beginTransaction().replace(R.id.content_frame, new MainFragment()).commit();
             }
         });

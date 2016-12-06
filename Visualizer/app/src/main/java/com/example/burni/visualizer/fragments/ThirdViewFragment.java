@@ -18,6 +18,10 @@ public class ThirdViewFragment extends MapFragmentBase {
 
     }
 
+    /**
+     * Returns the northernmost marker of all of the markers
+     * @return
+     */
     private Marker getNorthernmostMarker() {
 
         Marker out = _markers.get(0);

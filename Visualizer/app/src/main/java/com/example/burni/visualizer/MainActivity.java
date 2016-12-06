@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.burni.visualizer.datamodels.SignalCoordinate;
-import com.example.burni.visualizer.fragments.ARFragment;
 import com.example.burni.visualizer.fragments.AboutFragment;
 import com.example.burni.visualizer.fragments.GMapFragment;
 import com.example.burni.visualizer.fragments.MainFragment;
@@ -38,7 +37,15 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ResultCallback{
 
+    /**
+     * The interval at which the app will poll the web api for new info
+     */
     final int UPDATE_INTERVAL = 5000;
+
+    /**
+     * The end section of the WebApi to get data from
+     */
+    final String URI_END = "api/coordinate";
 
     private boolean _broadcast;
     private MainActivity _this;
@@ -48,6 +55,10 @@ public class MainActivity extends AppCompatActivity
     private GetJsonDataTaskBase _getSampleData;
     private Handler _getNewDataHandler;
 
+    /**
+     * OnCreate method, mostly just initializing all of the objects, listeners and handlers
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         _broadcast = false;
         _locations = new ArrayList<>();
         _getSampleData = new GetLocationsTask(_this);
-        _getSampleData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, _setupManager.getUrl() + "sampledata");
+        _getSampleData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         _alertingServer = new AlertServerTask(_this);
         _getNewDataHandler  = new Handler();
         _getNewDataHandler.postDelayed(updateLocations, UPDATE_INTERVAL);
@@ -125,19 +136,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
             return true;
@@ -153,6 +160,7 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
+        //If it's not setup, then make them set it up
         if(!getSetupManager().isSetup() && !(id == R.id.nav_about)) {
             fm.beginTransaction().replace(R.id.content_frame, new SetupFragment()).commit();
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,8 +172,6 @@ public class MainActivity extends AppCompatActivity
             fm.beginTransaction().replace(R.id.content_frame, new GMapFragment()).commit();
         } else if (id == R.id.nav_3dview) {
             fm.beginTransaction().replace(R.id.content_frame, new ThirdViewFragment()).commit();
-//        } else if (id == R.id.nav_arview) {
-//            fm.beginTransaction().replace(R.id.content_frame, new ARFragment()).commit();
         } else if (id == R.id.nav_setup) {
             fm.beginTransaction().replace(R.id.content_frame, new SetupFragment()).commit();
         } else if (id == R.id.nav_settings) {
@@ -178,6 +184,10 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    /**
+     * Method called when app is paused, so all tasks and handlers must be halted
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -187,6 +197,10 @@ public class MainActivity extends AppCompatActivity
         _getNewDataHandler.removeCallbacks(updateLocations);
 
     }
+
+    /**
+     * Method called when app is resumed, so all tasks and handlers must be resumed
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -198,26 +212,45 @@ public class MainActivity extends AppCompatActivity
         _getNewDataHandler.postDelayed(updateLocations, UPDATE_INTERVAL);
 
     }
+
+    /**
+     * Returns the list of active locations to map
+     * @return
+     */
     public List<SignalCoordinate> getLocations() {
 
         return _locations;
     }
+
+    /**
+     * Returns if the FAB has been activiated or not
+     * @return
+     */
     public boolean isBroadcasting() {
         return _broadcast;
     }
-    public void addLocations(List<SignalCoordinate> list) {
 
-        _locations.addAll(list);
-    }
+    /**
+     * Setter for field locations
+     * @param list
+     */
     public void setLocations(List<SignalCoordinate> list) {
 
         _locations = (ArrayList<SignalCoordinate>) list;
     }
 
+    /**
+     * Returns the setupmanager instance associated with this activity
+     * @return
+     */
     public SetupManager getSetupManager() {
         return _setupManager;
     }
 
+    /**
+     * Implemented method which is called when new data has come in from the web api
+     * @param list
+     */
     @Override
     public void onResult(List<SignalCoordinate> list) {
         if (list == null) {
@@ -225,18 +258,22 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         else {
-            setLocations((List<SignalCoordinate>) list);
+            setLocations(list);
         }
     }
 
+    /**
+     * Handler which polls the webapi for new data every x seconds
+     */
     private Runnable updateLocations = new Runnable() {
         @Override
         public void run() {
 
-            _getSampleData = new GetLocationsTask(_this);
-            _getSampleData.execute(_setupManager.getUrl() + "sampledata");
-            _getNewDataHandler.postDelayed(this, UPDATE_INTERVAL);
-
+            if (_setupManager.isSetup()) {
+                _getSampleData = new GetLocationsTask(_this);
+                _getSampleData.execute(_setupManager.getUrl() + URI_END);
+                _getNewDataHandler.postDelayed(this, UPDATE_INTERVAL);
+            }
         }
     };
 

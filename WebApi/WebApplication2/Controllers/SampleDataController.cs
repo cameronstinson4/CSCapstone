@@ -7,6 +7,7 @@ using System.Linq;
 using System.Diagnostics;
 using System.IO;
 using System;
+using WebApplication2.DataModels;
 
 namespace WebApplication2.Controllers
 {
@@ -14,8 +15,20 @@ namespace WebApplication2.Controllers
     public class SampleDataController : ApiController
     {
         #region fields
-
+        /// <summary>
+        /// The distance in meters in which if two coordinates are this close together they will be consolodated
+        /// </summary>
         private const int consolidationConstant = 20;
+
+        /// <summary>
+        /// the file path for the systems python interpreter
+        /// </summary>
+        private const string PythonFilePath = @"C:\Python\python.exe";
+
+        /// <summary>
+        /// The filepath for the trilateration python script
+        /// </summary>
+        private const string PythonScriptFilePath = @"C:\Python\trilaterate.py";
 
         /// <summary>
         /// List of consolidated locations based off of the datapoints
@@ -40,15 +53,15 @@ namespace WebApplication2.Controllers
         /// Get method which returns a list of all coordinates
         /// </summary>
         /// <returns></returns>
-        public SampleData Get()
+        public Coordinates Get()
         {
             if (_coordinates.Count == 0)
             {
                 //seedOriginalData();
             }
-            return new SampleData()
+            return new Coordinates()
             {
-                Coordinates = _coordinates
+                CoordinateList = _coordinates
             };
         }
 
@@ -75,7 +88,7 @@ namespace WebApplication2.Controllers
         #region private methods
 
         /// <summary>
-        /// 
+        /// Method will try to create a new set of drone data points to trilaterate
         /// </summary>
         /// <param name="newData"></param>
         private void processDroneData(DroneData newData)
@@ -127,15 +140,9 @@ namespace WebApplication2.Controllers
                     dds = addToSmallestDistance(dds);
                 }
 
-                // full path of python interpreter  
-                string python = @"C:\Python\python.exe";
-
-                // python app to call  
-                string myPythonApp = @"C:\git\CSCapstone\WebApi\WebApplication2\trilaterate.py";
-
                 ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = python;//cmd is full path to python.exe
-                start.Arguments = myPythonApp + " " + dds.ToString();//args is path to .py file and any cmd line args
+                start.FileName = PythonFilePath;//cmd is full path to python.exe
+                start.Arguments = PythonScriptFilePath + " " + dds.ToString();//args is path to .py file and any cmd line args
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
                 using (Process process = Process.Start(start))
@@ -165,7 +172,7 @@ namespace WebApplication2.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Adds 1 to the smallest distance in a drone data array
         /// </summary>
         /// <param name="dds"></param>
         /// <returns></returns>
@@ -189,7 +196,7 @@ namespace WebApplication2.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Adds a new coordinate to the database/arraylist, and checks if it needs to be consoliated with anything else
         /// </summary>
         /// <param name="newCoord"></param>
         private void addNewCoordinate(Coordinate newCoord)
@@ -211,7 +218,7 @@ namespace WebApplication2.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Average values of 2 coordinates
         /// </summary>
         /// <param name="one"></param>
         /// <param name="two"></param>
@@ -227,7 +234,7 @@ namespace WebApplication2.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Returns the distance between 2 coordinates
         /// </summary>
         /// <param name="one"></param>
         /// <param name="two"></param>
@@ -243,7 +250,7 @@ namespace WebApplication2.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Some fake data to seed
         /// </summary>
         private void seedOriginalData()
         {

@@ -34,7 +34,7 @@ public class GetLocationsTask extends GetJsonDataTaskBase {
 
         JSONArray array = null;
         try {
-            array = json.getJSONArray("Coordinates");
+            array = json.getJSONArray("CoordinateList");
         } catch (JSONException e) {
 
             e.printStackTrace();
