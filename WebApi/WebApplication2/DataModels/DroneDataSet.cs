@@ -35,7 +35,7 @@ namespace WebApplication2.DataModels
 
             foreach(DroneData dd in droneDataSet)
             {
-                output = $" {output} {dd.LatLng.lat.ToString("F7")} {dd.LatLng.lng.ToString("F7")} {(dd.Distance/1000).ToString("F9")}";
+                output = $" {output} {dd.LatLng.lat.ToString("F7")} {dd.LatLng.lng.ToString("F7")} {(dd.Distance).ToString("F7")}";
             }
 
             return output.Trim();

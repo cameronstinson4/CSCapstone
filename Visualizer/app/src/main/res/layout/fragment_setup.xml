@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <!-- This code can be used for an authentication implementation
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -10,17 +11,6 @@
         android:id="@+id/operationNameField"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="@string/http"
-        android:ems="10"
-        android:id="@+id/serverWebAddressField"
-        android:layout_above="@+id/operationNameField"
-        android:layout_alignStart="@+id/operationNameField"
-        android:layout_marginBottom="60dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -41,15 +31,6 @@
         android:layout_marginTop="30dp"
         android:id="@+id/serverPin" />
 
-    <TextView
-        android:text="@string/server_web_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/serverWebAddressField"
-        android:layout_centerHorizontal="true"
-
-        android:layout_marginBottom="24dp"
-        android:id="@+id/serverWebAddress" />
 
     <TextView
         android:text="@string/operation_name"
@@ -59,24 +40,44 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
         android:id="@+id/operationName" />
-
-    <TextView
-        android:text="@string/setup_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/setupMessage"
-        android:layout_alignParentEnd="true" />
+    -->
 
     <Button
         android:text="Setup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/serverPinField"
+        android:id="@+id/setupButton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:id="@+id/setupButton" />
+        android:layout_marginBottom="120dp" />
+
+    <TextView
+        android:text="@string/server_web_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/serverWebAddress"
+        android:layout_below="@+id/setupMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="115dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="@string/http"
+        android:ems="10"
+        android:id="@+id/serverWebAddressField"
+        android:layout_below="@+id/serverWebAddress"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/setup_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/setupMessage"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

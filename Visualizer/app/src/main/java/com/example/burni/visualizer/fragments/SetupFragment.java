@@ -18,17 +18,16 @@ public class SetupFragment extends android.app.Fragment {
 
     private Button setupButton;
     private EditText serverWebAddressField;
-    private EditText operationNameField;
-    private EditText serverPinField;
+
+    //These can be implemented for an authentication system
+    //private EditText operationNameField;
+    //private EditText serverPinField;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //context = container.getContext();
-        //Intent i = new Intent(context, SetupActivity.class);
-        //startActivity(i);
         return inflater.inflate(R.layout.fragment_setup, container,false);
     }
 
@@ -38,8 +37,11 @@ public class SetupFragment extends android.app.Fragment {
         setupButton = (Button) getView().findViewById(R.id.setupButton);
         setupButton.setEnabled(false);
         serverWebAddressField = (EditText) getView().findViewById(R.id.serverWebAddressField);
+
+        /*
         operationNameField = (EditText) getView().findViewById(R.id.operationNameField);
         serverPinField = (EditText) getView().findViewById(R.id.serverPinField);
+        */
 
         serverWebAddressField.addTextChangedListener(new TextWatcher() {
 
@@ -51,8 +53,9 @@ public class SetupFragment extends android.app.Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!serverWebAddressField.getText().toString().trim().isEmpty()
-                        && !operationNameField.getText().toString().trim().isEmpty()
-                        && !serverPinField.getText().toString().trim().isEmpty())
+                        //&& !operationNameField.getText().toString().trim().isEmpty()
+                        //&& !serverPinField.getText().toString().trim().isEmpty()
+                        )
                     setupButton.setEnabled(true);
                 else
                     setupButton.setEnabled(false);
@@ -63,6 +66,8 @@ public class SetupFragment extends android.app.Fragment {
 
             }
         });
+
+        /*
         operationNameField.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -107,13 +112,17 @@ public class SetupFragment extends android.app.Fragment {
 
             }
         });
+        */
 
         final SetupManager setupManager = ((MainActivity) getActivity()).getSetupManager();
 
         setupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setupManager.setup(serverWebAddressField.getText().toString(), operationNameField.getText().toString(), serverPinField.getText().toString());
+                setupManager.setup(serverWebAddressField.getText().toString(), "", ""
+                        //, operationNameField.getText().toString()
+                        //, serverPinField.getText().toString()
+                );
 
                 getActivity().getFragmentManager().beginTransaction().replace(R.id.content_frame, new MainFragment()).commit();
 
@@ -122,8 +131,8 @@ public class SetupFragment extends android.app.Fragment {
 
         if (setupManager.isSetup()) {
             serverWebAddressField.setText(setupManager.getUrl());
-            operationNameField.setText(setupManager.getOperationName());
-            serverPinField.setText(setupManager.getPin());
+            //operationNameField.setText(setupManager.getOperationName());
+            //serverPinField.setText(setupManager.getPin());
         }
     }
 }

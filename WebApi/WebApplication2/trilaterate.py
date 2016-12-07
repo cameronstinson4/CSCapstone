@@ -1,18 +1,20 @@
+import sys
 import math
 import numpy
 
 #found on stackoverflowthankgod
 #assuming elevation = 0
+#distance must be in km
 earthR = 6371
-LatA = sys.argv[1]
-LonA = sys.argv[2]
-DistA = sys.argv[3]
-LatB = sys.argv[4]
-LonB = sys.argv[5]
-DistB = sys.argv[6]
-LatC = sys.argv[7]
-LonC = sys.argv[8]
-DistC = sys.argv[9]
+LatA = float(sys.argv[1])
+LonA = float(sys.argv[2])
+DistA = float(sys.argv[3])/1000
+LatB = float(sys.argv[4])
+LonB = float(sys.argv[5])
+DistB = float(sys.argv[6])/1000
+LatC = float(sys.argv[7])
+LonC = float(sys.argv[8])
+DistC = float(sys.argv[9])/1000
 
 #using authalic sphere
 #if using an ellipsoid this step is slightly different

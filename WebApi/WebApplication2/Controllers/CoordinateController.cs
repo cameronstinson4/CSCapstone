@@ -21,14 +21,14 @@ namespace WebApplication2.Controllers
         private const int consolidationConstant = 20;
 
         /// <summary>
-        /// the file path for the systems python interpreter
+        /// the file path for the systems python interpreter This will have to be altered for different systems
         /// </summary>
         private const string PythonFilePath = @"C:\Python\python.exe";
 
         /// <summary>
         /// The filepath for the trilateration python script
         /// </summary>
-        private const string PythonScriptFilePath = @"C:\Python\trilaterate.py";
+        private static string PythonScriptFilePath = AppDomain.CurrentDomain.BaseDirectory + @"trilaterate.py";
 
         /// <summary>
         /// List of consolidated locations based off of the datapoints
@@ -115,7 +115,12 @@ namespace WebApplication2.Controllers
                 if (builder.canBuild())
                 {
                     _droneDataPoints = _droneDataPoints.Where(x => x.ScanId != newData.ScanId).ToList<DroneData>(); //removes data that was sent to dronedataset
-                    trilaterate(builder.build());
+                    var newCoord = trilaterate(builder.build());
+
+                    if (newCoord != null)
+                    {
+                        addNewCoordinate(newCoord);
+                    }
                 }
                 else
                 {
@@ -129,10 +134,10 @@ namespace WebApplication2.Controllers
         /// Automatically retries with larger distances if function fails
         /// </summary>
         /// <param name="dds"></param>
-        private void trilaterate(DroneDataSet dds)
+        private Coordinate trilaterate(DroneDataSet dds)
         {
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Coordinate output;
                 if (i > 0)
@@ -160,15 +165,15 @@ namespace WebApplication2.Controllers
                             double lat = double.Parse(words[0]);
                             double lng = double.Parse(secondwords[0]);
 
-                            output = new Coordinate(new LatLng(lat, lng), i);
+                            output = new Coordinate(new LatLng(lat, lng), i*5);
 
-                            addNewCoordinate(output);
+                            return output;
 
-                            break;
                         }
                     }
                 }
             }
+            return null;
         }
 
         /// <summary>
@@ -178,19 +183,19 @@ namespace WebApplication2.Controllers
         /// <returns></returns>
         private DroneDataSet addToSmallestDistance(DroneDataSet dds)
         {
-            DroneData output = new DroneData("", double.MaxValue, new LatLng(0, 0), "");
+            DroneData smallest = new DroneData("", double.MaxValue, new LatLng(0, 0), "");
 
             int index = 0;
             for (int i = 0; i < dds.droneDataSet.Count; i++)
             {
-                if (dds.droneDataSet.ElementAt(i).Distance < output.Distance)
+                if (dds.droneDataSet.ElementAt(i).Distance < smallest.Distance)
                 {
-                    output = dds.droneDataSet.ElementAt(i);
+                    smallest = dds.droneDataSet.ElementAt(i);
                     index = i;
                 }
             }
 
-            dds.droneDataSet.ElementAt(index).Distance += 1;
+            dds.droneDataSet.ElementAt(index).Distance += (double) 5;
 
             return dds;
         }

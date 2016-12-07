@@ -27,7 +27,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="alert_server">"Broadcasting your position."</string>
     <string name="height">"Height"</string>
-    <string name="setup_message">Setup: Please enter the following information to connect to a server</string>
+    <string name="setup_message">Setup: Please enter the web address of your server</string>
     <string name="operation_name">Operation Name:</string>
     <string name="server_web_address">Server Web Address:</string>
     <string name="server_pin">Server PIN:</string>
