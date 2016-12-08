@@ -1,5 +1,2 @@
 # CSCapstone
-Please see attached Gantt Chart and Project Proposal for more details.
-Desktop Test
-Laptop Test
-
+If running on a new machine, you will have to insert the installion location of your python interpreter into the webapi. 
