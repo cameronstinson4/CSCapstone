@@ -15,11 +15,7 @@ namespace WebApplication2.Controllers
     public class CoordinateController : ApiController
     {
         #region fields
-        /// <summary>
-        /// The distance in meters in which if two coordinates are this close together they will be consolodated
-        /// </summary>
-        private const int consolidationConstant = 20;
-
+       
         /// <summary>
         /// the file path for the systems python interpreter This will have to be altered for different systems
         /// </summary>
@@ -34,6 +30,11 @@ namespace WebApplication2.Controllers
         /// List of consolidated locations based off of the datapoints
         /// </summary>
         private static List<Coordinate> _coordinates = new List<Coordinate>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static List<List<Coordinate>> _coordinateSets = new List<List<Coordinate>>();
 
         /// <summary>
         /// List of individual drone data points
@@ -55,14 +56,7 @@ namespace WebApplication2.Controllers
         /// <returns></returns>
         public Coordinates Get()
         {
-            if (_coordinates.Count == 0)
-            {
-                //seedOriginalData();
-            }
-            return new Coordinates()
-            {
-                CoordinateList = _coordinates
-            };
+            return new Coordinates { CoordinateList = _coordinates };
         }
 
         /// <summary>
@@ -106,7 +100,7 @@ namespace WebApplication2.Controllers
 
                 foreach (DroneData d in _droneDataPoints)
                 {
-                    if (d.ScanId == newData.ScanId)
+                    if (d.ScanId == newData.ScanId && d.SignalId == newData.SignalId)
                     {
                         builder.addDroneData(d);
                     }
@@ -142,7 +136,7 @@ namespace WebApplication2.Controllers
                 Coordinate output;
                 if (i > 0)
                 {
-                    dds = addToSmallestDistance(dds);
+                    dds.droneDataSet[i].Distance += 2;
                 }
 
                 ProcessStartInfo start = new ProcessStartInfo();
@@ -165,7 +159,7 @@ namespace WebApplication2.Controllers
                             double lat = double.Parse(words[0]);
                             double lng = double.Parse(secondwords[0]);
 
-                            output = new Coordinate(new LatLng(lat, lng), i*5);
+                            output = new Coordinate(dds.droneDataSet[0].SignalId, new LatLng(lat, lng), i*5);
 
                             return output;
 
@@ -175,67 +169,82 @@ namespace WebApplication2.Controllers
             }
             return null;
         }
-
-        /// <summary>
-        /// Adds 1 to the smallest distance in a drone data array
-        /// </summary>
-        /// <param name="dds"></param>
-        /// <returns></returns>
-        private DroneDataSet addToSmallestDistance(DroneDataSet dds)
-        {
-            DroneData smallest = new DroneData("", double.MaxValue, new LatLng(0, 0), "");
-
-            int index = 0;
-            for (int i = 0; i < dds.droneDataSet.Count; i++)
-            {
-                if (dds.droneDataSet.ElementAt(i).Distance < smallest.Distance)
-                {
-                    smallest = dds.droneDataSet.ElementAt(i);
-                    index = i;
-                }
-            }
-
-            dds.droneDataSet.ElementAt(index).Distance += (double) 5;
-
-            return dds;
-        }
-
+        
         /// <summary>
         /// Adds a new coordinate to the database/arraylist, and checks if it needs to be consoliated with anything else
         /// </summary>
         /// <param name="newCoord"></param>
         private void addNewCoordinate(Coordinate newCoord)
         {
-            _dataPoints.Add(newCoord);
+            //_dataPoints.Add(newCoord);
 
-            foreach (Coordinate c in _coordinates)
+            foreach (List<Coordinate> lc in _coordinateSets)
             {
-                if (distanceBetween(c, newCoord) < consolidationConstant)
+                if (lc[0].Id == newCoord.Id)
                 {
-                    Coordinate avgCoord = averageCoordinates(c, newCoord);
-                    _coordinates.Remove(c);
-                    _coordinates.Add(avgCoord);
+                    lc.Add(newCoord);
                     return;
                 }
             }
+            
+            _coordinateSets.Add(new List<Coordinate> { newCoord });
 
-            _coordinates.Add(newCoord);
+            _coordinates = new List<Coordinate>();
+            foreach (List<Coordinate> lc in _coordinateSets)
+            {
+                _coordinates.Add(averageCoordinateSet(lc));
+            }
         }
 
         /// <summary>
-        /// Average values of 2 coordinates
+        /// Average values of a coordinate set
         /// </summary>
         /// <param name="one"></param>
         /// <param name="two"></param>
-        private Coordinate averageCoordinates(Coordinate one, Coordinate two)
+        private Coordinate averageCoordinateSet(List<Coordinate> input)
         {
-            one.Accuracy = one.Accuracy > two.Accuracy ? one.Accuracy : two.Accuracy;
-            one.Accuracy = one.Accuracy > distanceBetween(one, two) ? one.Accuracy : distanceBetween(one, two);
-            one.LatLng.lat = (one.LatLng.lat + two.LatLng.lat) / 2;
-            one.LatLng.lng = (one.LatLng.lng + two.LatLng.lng) / 2;
+            if (input == null || input.Count <= 0)
+            {
+                throw new ArgumentException("Arguments invalid");
+            }
 
-            return one;
+            LatLng average = input[0].LatLng;
 
+            for (int i = 1; i < input.Count; i++)
+            {
+                average.lat += input[i].LatLng.lat;
+                average.lng += input[i].LatLng.lng;
+            }
+
+            average.lat /= input.Count;
+            average.lng /= input.Count;
+
+            return new Coordinate(input[0].Id, average, largestDistanceBetween(input)/2);
+
+        }
+
+        /// <summary>
+        /// Returns the distance between 2 coordinates
+        /// </summary>
+        /// <param name="one"></param>
+        /// <param name="two"></param>
+        /// <returns></returns>
+        private double largestDistanceBetween(List<Coordinate> input)
+        {
+            double largestDistance = int.MinValue;
+
+            foreach (Coordinate c in input)
+            {
+                foreach (Coordinate j in input)
+                {
+                    if (distanceBetween(c, j) > largestDistance)
+                    {
+                        largestDistance = distanceBetween(c, j);
+                    }
+                }
+            }
+
+            return largestDistance;
         }
 
         /// <summary>
@@ -254,33 +263,33 @@ namespace WebApplication2.Controllers
 
         }
 
-        /// <summary>
-        /// Some fake data to seed
-        /// </summary>
-        private void seedOriginalData()
-        {
+        ///// <summary>
+        ///// Some fake data to seed
+        ///// </summary>
+        //private void seedOriginalData()
+        //{
 
-            LatLng pos1 = new LatLng(37.06053496780209, -76.49047845974565);
-            LatLng pos2 = new LatLng(37.06219398671905, -76.48933410469908);
-            LatLng pos3 = new LatLng(37.06625769597734, -76.49276732699946);
+        //    LatLng pos1 = new LatLng(37.06053496780209, -76.49047845974565);
+        //    LatLng pos2 = new LatLng(37.06219398671905, -76.48933410469908);
+        //    LatLng pos3 = new LatLng(37.06625769597734, -76.49276732699946);
 
-            _coordinates.Add(new Coordinate(pos1, 10));
-            _coordinates.Add(new Coordinate(pos2, 5));
-            _coordinates.Add(new Coordinate(pos3, 7));
+        //    _coordinates.Add(new Coordinate(pos1, 10));
+        //    _coordinates.Add(new Coordinate(pos2, 5));
+        //    _coordinates.Add(new Coordinate(pos3, 7));
 
-            _droneDataPoints.Add(
-                new DroneData(
-                    "swxedcrfvtgb"
-                    , 114.207460633365
-                    , new LatLng(37.06431008815, -76.49267291623)
-                    , "1"));
-            _droneDataPoints.Add(
-                new DroneData(
-                    "qzawsxedcrfvg"
-                    , 211.437352892073
-                    , new LatLng(37.06425093355, -76.49134212943)
-                    , "1"));
-        }
+        //    _droneDataPoints.Add(
+        //        new DroneData(
+        //            "swxedcrfvtgb"
+        //            , 114.207460633365
+        //            , new LatLng(37.06431008815, -76.49267291623)
+        //            , "1"));
+        //    _droneDataPoints.Add(
+        //        new DroneData(
+        //            "qzawsxedcrfvg"
+        //            , 211.437352892073
+        //            , new LatLng(37.06425093355, -76.49134212943)
+        //            , "1"));
+        //}
 
         #endregion
     }

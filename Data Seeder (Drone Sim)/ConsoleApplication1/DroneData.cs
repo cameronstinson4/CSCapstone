@@ -15,12 +15,15 @@ namespace ConsoleApplication1
 
         public string ScanId { get; set; }
 
-        public DroneData(string droneId, double distance, LatLng latLng, string scanId)
+        public string SignalId { get; set; }
+
+        public DroneData(string droneId, double distance, LatLng latLng, string scanId, string signalId)
         {
             DroneId = droneId;
             Distance = distance;
             LatLng = latLng;
             ScanId = scanId;
+            SignalId = signalId;
         }
     }
 }

@@ -8,3 +8,13 @@ C:\Users\burni\Desktop\ConsoleApplication1\ConsoleApplication1\bin\Debug\Newtons
 C:\Users\burni\Desktop\ConsoleApplication1\ConsoleApplication1\bin\Debug\RestSharp.dll
 C:\Users\burni\Desktop\ConsoleApplication1\ConsoleApplication1\bin\Debug\Newtonsoft.Json.xml
 C:\Users\burni\Desktop\ConsoleApplication1\ConsoleApplication1\bin\Debug\RestSharp.xml
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\bin\Debug\Newtonsoft.Json.dll
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\bin\Debug\RestSharp.dll
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\bin\Debug\Newtonsoft.Json.xml
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\bin\Debug\RestSharp.xml
+C:\git\CSCapstone\Data Seeder (Drone Sim)\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache

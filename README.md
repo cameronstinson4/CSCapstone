@@ -1,5 +1,6 @@
 # CSCapstone
 There are 3 seperate project included:
+
 WebApi: Is a ASP.Net web api that purpose is to store data from the drones, and send data to the phone application. 
 Recommended IDE: Visual Studio (Community is fine)
 Note: It can be very difficult to expose this api externally if run locally, so I recommend tethering your phone using Chrome://inspect and port forwarding to the local port used by your web api.

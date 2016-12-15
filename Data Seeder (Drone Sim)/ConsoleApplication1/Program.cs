@@ -12,7 +12,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            List<DroneData> droneData = getdroneData(false); //true for clean data false for dirty
+            List<DroneData> droneData = getdroneData(true); //true for clean data false for dirty
 
             foreach (DroneData dd in droneData)
             {
@@ -54,9 +54,14 @@ namespace ConsoleApplication1
                 strings.Add(fergdirty);
                 strings.Add(cnudirty);
             }
-            
+
+            var signaalId = 0;
+
             foreach (string s in strings)
             {
+
+                signaalId += 1;
+
                 var splitStrings = s.Split(",".ToArray());
 
                 for(int i = 0; i < splitStrings.Length; i+=3 )
@@ -65,7 +70,8 @@ namespace ConsoleApplication1
                         new DroneData((i / 3) % 9 + "aa"
                         , double.Parse(splitStrings[i + 2])
                         , new LatLng(double.Parse(splitStrings[i]), double.Parse(splitStrings[i + 1]))
-                        , Math.Floor(((double)i) / 9) + ""));
+                        , Math.Floor(((double)i) / 9) + ""
+                        , signaalId + ""));
                 }
             }
 
